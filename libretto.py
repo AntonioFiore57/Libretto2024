@@ -1,7 +1,5 @@
 """
-Scrivere un programma Python che permetta di gestire un libretto universitario.
-Il programma dovrà definire una classe Voto, che rappresenta un singolo esame superato,
-ed una classe Libretto, che contiene l'elenco dei voti di uno studente.
+
 """
 from random import randint
 
@@ -60,6 +58,22 @@ class Libretto:
             self.voti.append(voto)
         return not presente
 
+    def findByPunteggio(self, punteggio, lode):
+        """
+        Ricerca degli esami che hanno il punteggio e l lode passati come parametri.
+        Si controlla la compatibilità tra punteggio e lode; se esiste incompatibilità
+        si restituisce una lista vuota
+        :param punteggio: intero punteggio da cercare
+        :param lode: booleano
+        :return: lista degli oggetti Voto che soddisfano la richiesta (lista vuota in caso contrario)
+        """
+
+
+        if punteggio != 30 and lode:
+            votiTrovati = []
+        else:
+            votiTrovati = [voto for voto in self.voti if voto.punteggio == punteggio and voto.lode == lode]
+        return votiTrovati
     def media(self):
         if len(self.voti)==0:
             raise ValueError("Elenco voti vuoto")
@@ -68,19 +82,36 @@ class Libretto:
 
 lib = Libretto()
 
-# inserire nel `Libretto` un elenco di 10 oggetti `Voto` a piacere
-for i in range(10):
-    n = randint(0, len(lst_esami)-1 )
-    nomeEsame = lst_esami[n]
-    crediti = randint(5, 15)
-    punteggio = randint(18, 30)
-    lode = True if punteggio == 30 and crediti%2==0 else  False
-    data = f"{randint(2000, 2023)}-{randint(1, 12)}-{randint(1, 28)}"
+def domanda_1():
+    # inserire nel `Libretto` un elenco di 10 oggetti `Voto` a piacere
+    for i in range(10):
 
-    voto = Voto(nomeEsame, crediti, punteggio, lode, data)
+        nomeEsame = lst_esami[i]
+        crediti = randint(5, 15)
+        punteggio = randint(18, 30)
+        lode = True if punteggio == 30 and crediti%2==0 else  False
+        data = f"{randint(2000, 2023)}-{randint(1, 12)}-{randint(1, 28)}"
 
-    lib.append(voto)
+        voto = Voto(nomeEsame, crediti, punteggio, lode, data)
 
-for vv in lib.voti:
-    print(vv)
+        lib.append(voto)
 
+    for vv in lib.voti:
+        print(vv)
+
+
+
+def domanda_2():
+    # stampare tutti i corsi in cui il punteggio è pari a 25
+    # impostiamo alcuni esami al voto richiesto
+    lib.voti[1].punteggio = 25
+    lib.voti[3].punteggio = 25
+    lib.voti[8].punteggio = 25
+    for voto in lib.findByPunteggio(25, False):
+        print(voto)
+
+
+if __name__ == '__main__':
+    domanda_1()
+    print('\n-----------------------\n')
+    domanda_2()
