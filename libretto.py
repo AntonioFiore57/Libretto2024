@@ -75,6 +75,24 @@ class Libretto:
             votiTrovati = [voto for voto in self.voti if voto.punteggio == punteggio and voto.lode == lode]
         return votiTrovati
 
+    def matchNomeEsamePunteggio(self, voto):
+        """
+        nomeEsame, punteggio, lode
+        Ricerca nella lista voti per il nome dell'esame, il punteggio e la lode.
+        Non si controlla la consistenza dell' punteggio.
+        :param voto: oggetto Voto da cercare nella lista voti
+        :return: oggetto voto se trovato. Viene sollevata un'eccezione se non trovata
+        """
+
+        trovato = False
+        for i in range(len(self.voti) - 1 ):
+            if self.voti[i].esame == voto.esame and self.voti[i].punteggio == voto.punteggio and self.voti[i].lode == voto.lode:
+                trovato = True
+                break
+        if not trovato:
+            raise ValueError(f"Nessuna corrispondenza per esame={voto.esame}, punteggio={voto.punteggio}, lode={voto.lode}  ")
+        return self.voti[i]
+
     def findNomeEsame(self, nomeEsame):
         """
         Ricerca il nome dell'esame nella lista degli esami se viene trovato restituisce l'oggetto voto
@@ -138,7 +156,21 @@ def domanda_3():
     except:
         print(f"{nomeEsame} non trovato")
 
+def domanda_4():
+    """
+    creare un nuovo oggetto `Voto`, e verificare se tale valutazione esiste già nel `Libretto` (stesso esame con stesso
+   punteggio)
+    """
+    # voto = Voto("Fisica Teorica",15, 28, False, '2022-03-18')
+    voto = lib.voti[8]
+    try:
+        lib.matchNomeEsamePunteggio(voto)
+        print(voto)
+    except ValueError as e:
+        print(e)
+
+
 if __name__ == '__main__':
     domanda_1()
     print('\n-----------------------\n')
-    domanda_3()
+    domanda_4()
