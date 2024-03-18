@@ -74,6 +74,25 @@ class Libretto:
         else:
             votiTrovati = [voto for voto in self.voti if voto.punteggio == punteggio and voto.lode == lode]
         return votiTrovati
+
+    def findNomeEsame(self, nomeEsame):
+        """
+        Ricerca il nome dell'esame nella lista degli esami se viene trovato restituisce l'oggetto voto
+        corrispondente. In caso contrario la funzione solleva un'eccezione
+        :param nomeEsame: stringa nome esame da cercare
+        :return: oggetto voto
+        """
+        trovato = False
+        n = len(self.voti)
+        for i in range(n-1):
+            if self.voti[i].esame == nomeEsame:
+                trovato = True
+                break
+        if not trovato:
+            raise ValueError("Nome esame non trovato")
+
+        return self.voti[i]
+
     def media(self):
         if len(self.voti)==0:
             raise ValueError("Elenco voti vuoto")
@@ -110,8 +129,16 @@ def domanda_2():
     for voto in lib.findByPunteggio(25, False):
         print(voto)
 
+def domanda_3():
+    # ricercare nel `Libretto` il punteggio di un esame, dato il nome del corso
+    nomeEsame = 'Analisi 34'
+    try:
+        voto = lib.findNomeEsame(nomeEsame)
+        print(voto)
+    except:
+        print(f"{nomeEsame} non trovato")
 
 if __name__ == '__main__':
     domanda_1()
     print('\n-----------------------\n')
-    domanda_2()
+    domanda_3()
