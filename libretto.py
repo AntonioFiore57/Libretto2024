@@ -206,6 +206,14 @@ def domanda_5():
     voto2.punteggio = 18
     print(f"voto2 modificato: {lib.has_conflitto(voto2)}")
 
+def domanda_6():
+    # modificare il metodo Libretto.append() in modo da evitare
+    # di inserire valutazioni duplicate
+    # (stesso esame con stesso punteggio) o in conflitto
+    pass
+
+
+
 
 if __name__ == '__main__':
     domanda_1()
