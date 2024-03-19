@@ -83,6 +83,7 @@ class Libretto:
 
     def matchNomeEsamePunteggio(self, voto):
         """
+        proposta nome alternativo: has_voto
         nomeEsame, punteggio, lode
         Ricerca nella lista voti se esiste un voto con nome esame, punteggio e lode
          uguali a quelli dell'oggetto passsato come parametro.
