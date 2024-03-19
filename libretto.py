@@ -30,11 +30,13 @@ class Voto:
             raise ValueError("Punteggio esame errato (punteggio compreso tra 18 e 30 )")
 
     def __str__(self):
-        return f"Esame {self.esame} superato con {self.punteggio}"
+        return f"Esame {self.esame} superato con {self.str_punteggio()}"
 
     def __repr__(self):
         return f"Voto('{self.esame}', {self.cfu}, {self.punteggio}, {self.lode}, '{self.data}')"
 
+    def str_punteggio(self):
+        return f"30 e lode" if self.punteggio == 30 and self.lode else f"{self.punteggio}"
 
 
 class Libretto:
