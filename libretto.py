@@ -81,9 +81,9 @@ class Libretto:
             votiTrovati = [voto for voto in self.voti if voto.punteggio == punteggio and voto.lode == lode]
         return votiTrovati
 
-    def matchNomeEsamePunteggio(self, voto):
+    def has_voto(self, voto):
         """
-        proposta nome alternativo: has_voto
+
         nomeEsame, punteggio, lode
         Ricerca nella lista voti se esiste un voto con nome esame, punteggio e lode
          uguali a quelli dell'oggetto passsato come parametro.
@@ -171,7 +171,7 @@ def domanda_4():
     voto = Voto("Fisica Teorica",15, 30, True, '2022-03-18')
     #voto = lib.voti[8]
 
-    if lib.matchNomeEsamePunteggio(voto):
+    if lib.has_voto(voto):
         print(f"{voto} è presente")
     else:
         print(f" {voto} non  è presente")
