@@ -49,13 +49,21 @@ class Libretto:
 
     def append(self, voto):
         """
-        La funzione controlla se è presente un esame con lo stesso nome
-        dell'oggetto voto passato come parametro. In questo caso non lo inserisce
-        :param voto: oggetto voto
-        :return: True se l'esame è stato inserito
+        La funzione controlla:
+            se il voto è presente (has_voto) -> viene sollevata un'eccezione
+            se vi sono conflitti (has_conflitto) -> viene sollevata un'eccezione
+
+        :param voto: oggetto voto da inserire nella lista
+        :return: None
         """
-        # non si possono inserire due esami con lo stesso nome
-        presente = False
+
+        if self.has_voto(voto):
+            raise ValueError("Voto già presente")
+        if self.has_conflitto(voto):
+            raise  ValueError("Voto in conflitto")
+        self.voti.append(voto)
+
+
         for vv in self.voti:
             if vv.esame == voto.esame:
                 presente = True
@@ -210,12 +218,20 @@ def domanda_6():
     # modificare il metodo Libretto.append() in modo da evitare
     # di inserire valutazioni duplicate
     # (stesso esame con stesso punteggio) o in conflitto
-    pass
 
+    #voto1 = Voto("Fisica Teorica", 15, 30, True, '2022-03-18')
+    voto1 = Voto(lib.voti[8].esame, lib.voti[8].cfu, lib.voti[8].punteggio, lib.voti[8].lode, lib.voti[8].data)
+    voto1.punteggio = 18
+    voto1.lode = False
 
+    try:
+        lib.append(voto1)
+        print(f"\n{voto1}   Aggiunto")
+    except ValueError as e:
+        print(e)
 
 
 if __name__ == '__main__':
     domanda_1()
     print('\n-----------------------\n')
-    domanda_5()
+    domanda_6()
