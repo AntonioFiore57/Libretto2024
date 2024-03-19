@@ -196,8 +196,18 @@ def domanda_4():
 def domanda_5():
     # creare un nuovo oggetto Voto, e verificare se esiste
     # un conflitto con il Libretto (stesso esame e punteggio diverso)
-    pass
+    voto1 = Voto("Fisica Teorica", 15, 30, True, '2022-03-18')
+    voto2 = Voto(lib.voti[8].esame, lib.voti[8].cfu, lib.voti[8].punteggio, lib.voti[8].lode, lib.voti[8].data)
+
+
+    print(f"voto1: {lib.has_conflitto(voto1)}")
+    print(f"voto2: {lib.has_conflitto(voto2)}")
+
+    voto2.punteggio = 18
+    print(f"voto2 modificato: {lib.has_conflitto(voto2)}")
+
+
 if __name__ == '__main__':
     domanda_1()
     print('\n-----------------------\n')
-    domanda_4()
+    domanda_5()
