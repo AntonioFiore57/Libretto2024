@@ -1,0 +1,57 @@
+class Voto:
+    def __init__(self, esame, cfu, punteggio, lode, data):
+        self.esame = esame
+        self.cfu = cfu
+        self.__punteggio = 0
+        self.lode = lode
+        self.data = data
+
+        self.punteggio = punteggio
+        if self.lode and self.__punteggio!=30:
+            raise ValueError("Lode non applicabile")
+    @property
+    def punteggio(self):
+        return self.__punteggio
+
+    @punteggio.setter
+    def punteggio(self, punteggio):
+        if punteggio >= 18 and punteggio <= 30:
+            self.__punteggio = punteggio
+        else:
+            raise ValueError("Punteggio esame errato (punteggio compreso tra 18 e 30 )")
+
+    def __str__(self):
+        return f"Esame {self.esame} superato con {self.str_punteggio()}"
+
+    def __repr__(self):
+        return f"Voto('{self.esame}', {self.cfu}, {self.punteggio}, {self.lode}, '{self.data}')"
+
+    def str_punteggio(self):
+        """
+        Costrusce la stringa in base al punteggio tenendo conto della lode
+        :return: stringa rappresentativa del punteggio
+        """
+        return f"30 e lode" if self.punteggio == 30 and self.lode else f"{self.punteggio}"
+
+
+class Libretto:
+    def __init__(self):
+        self.voti = []
+    def clona(self):
+        nuovo = Libretto()
+        nuovo.voti = self.voti.copy()
+        # nuovo.voti = copy.deepcopy(self.voti)
+        """
+        for v in nuovo.voti:
+            if (18 <=v.punteggio<= 23) or v.punteggio == 29:
+                v.punteggio += 1
+            elif 24<=v.punteggio <=28:
+                v.punteggio += 2
+        """
+        return nuovo
+
+lib = Libretto()
+lib.voti.append(Voto("Fisica", 10, 18, False, '2022-03-03') )
+lib.voti.append(Voto("Astronomia", 15, 28, False, '2022-04-04') )
+
+lib2 = lib.clona()
