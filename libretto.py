@@ -36,6 +36,10 @@ class Voto:
         return f"Voto('{self.esame}', {self.cfu}, {self.punteggio}, {self.lode}, '{self.data}')"
 
     def str_punteggio(self):
+        """
+        Costrusce la stringa in base al punteggio tenendo conto della lode
+        :return: stringa rappresentativa del punteggio
+        """
         return f"30 e lode" if self.punteggio == 30 and self.lode else f"{self.punteggio}"
 
 
@@ -80,10 +84,11 @@ class Libretto:
     def matchNomeEsamePunteggio(self, voto):
         """
         nomeEsame, punteggio, lode
-        Ricerca nella lista voti per il nome dell'esame, il punteggio e la lode.
+        Ricerca nella lista voti se esiste un voto con nome esame, punteggio e lode
+         uguali a quelli dell'oggetto passsato come parametro.
         Non si controlla la consistenza dell' punteggio.
         :param voto: oggetto Voto da cercare nella lista voti
-        :return: oggetto voto se trovato. Viene sollevata un'eccezione se non trovata
+        :return: True se si è trovata corrispondenza
         """
 
         trovato = False
@@ -91,9 +96,8 @@ class Libretto:
             if self.voti[i].esame == voto.esame and self.voti[i].punteggio == voto.punteggio and self.voti[i].lode == voto.lode:
                 trovato = True
                 break
-        if not trovato:
-            raise ValueError(f"Nessuna corrispondenza per esame={voto.esame}, punteggio={voto.punteggio}, lode={voto.lode}  ")
-        return self.voti[i]
+
+        return trovato
 
     def findNomeEsame(self, nomeEsame):
         """
@@ -163,13 +167,13 @@ def domanda_4():
     creare un nuovo oggetto `Voto`, e verificare se tale valutazione esiste già nel `Libretto` (stesso esame con stesso
    punteggio)
     """
-    # voto = Voto("Fisica Teorica",15, 28, False, '2022-03-18')
-    voto = lib.voti[8]
-    try:
-        lib.matchNomeEsamePunteggio(voto)
-        print(voto)
-    except ValueError as e:
-        print(e)
+    voto = Voto("Fisica Teorica",15, 30, True, '2022-03-18')
+    #voto = lib.voti[8]
+
+    if lib.matchNomeEsamePunteggio(voto):
+        print(f"{voto} è presente")
+    else:
+        print(f" {voto} non  è presente")
 
 
 if __name__ == '__main__':
