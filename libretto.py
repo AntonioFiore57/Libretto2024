@@ -2,6 +2,7 @@
 
 """
 from random import randint
+import  copy
 
 lst_esami= ['Analisi I', 'Analisi II', 'Fisica I',
            'Fisica II', 'Chimica', 'Meccanica razionale', 'Informatica I'
@@ -46,7 +47,16 @@ class Voto:
 class Libretto:
     def __init__(self):
         self.voti = []
+    def clona(self):
+        nuovo = Libretto()
+        nuovo.voti = copy.deepcopy(self.voti)
+        for v in nuovo.voti:
+            if (18 <=v.punteggio<= 23) or v.punteggio == 29:
+                v.punteggio += 1
+            elif 24<=v.punteggio <=28:
+                v.punteggio += 2
 
+        return nuovo
     def append(self, voto):
         """
         La funzione controlla:
@@ -234,4 +244,10 @@ def domanda_6():
 if __name__ == '__main__':
     domanda_1()
     print('\n-----------------------\n')
-    domanda_6()
+
+    lib2 = lib.clona()
+
+    for v in lib2.voti:
+        print(v)
+
+    print("\n*** Fatto ***")
