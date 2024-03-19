@@ -43,13 +43,18 @@ class Voto:
         """
         return f"30 e lode" if self.punteggio == 30 and self.lode else f"{self.punteggio}"
 
+    def copy(self):
+        return Voto(self.esame, self.cfu, self.punteggio, self.lode, self.data)
 
 class Libretto:
     def __init__(self):
         self.voti = []
     def clona(self):
         nuovo = Libretto()
-        nuovo.voti = copy.deepcopy(self.voti)
+        # nuovo.voti = copy.deepcopy(self.voti)
+        for v in self.voti:
+            nuovo.append( v.copy() )
+
         for v in nuovo.voti:
             if (18 <=v.punteggio<= 23) or v.punteggio == 29:
                 v.punteggio += 1

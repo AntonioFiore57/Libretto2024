@@ -34,6 +34,7 @@ class Voto:
         return f"30 e lode" if self.punteggio == 30 and self.lode else f"{self.punteggio}"
 
 
+
 class Libretto:
     def __init__(self):
         self.voti = []
