@@ -93,12 +93,29 @@ class Libretto:
         """
 
         trovato = False
-        for i in range(len(self.voti) - 1 ):
-            if self.voti[i].esame == voto.esame and self.voti[i].punteggio == voto.punteggio and self.voti[i].lode == voto.lode:
+        for v in self.voti:
+            if v.esame == voto.esame and v.punteggio == voto.punteggio and v.lode == voto.lode:
                 trovato = True
                 break
 
         return trovato
+
+    def has_conflitto(self, voto):
+        """
+        Ricerca nella lista voti se esiste un voto con nome esame uguale a quello
+        del parametro ma con punteggio diverso
+        Non si controlla la consistenza dell' punteggio.
+        :param voto: oggetto Voto da confrontare  nella lista voti
+        :return: True se esiste conflitto
+        """
+
+        conflitto = False
+        for v in self.voti:
+            if v.esame == voto.esame and (v.punteggio != voto.punteggio or v.lode != voto.lode):
+                conflitto = True
+                break
+
+        return conflitto
 
     def findNomeEsame(self, nomeEsame):
         """
@@ -176,7 +193,10 @@ def domanda_4():
     else:
         print(f" {voto} non  è presente")
 
-
+def domanda_5():
+    # creare un nuovo oggetto Voto, e verificare se esiste
+    # un conflitto con il Libretto (stesso esame e punteggio diverso)
+    pass
 if __name__ == '__main__':
     domanda_1()
     print('\n-----------------------\n')
