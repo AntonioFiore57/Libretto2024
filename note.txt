@@ -43,8 +43,8 @@ def crea_libretto_ordinato_per_nome(self):
 
 def ordina_per_nome(self):
     # ordina self.voti per nome esame
-
-
+    self.voti.sort(key=lambda v: v.esame)
+    #self.voti.sort(key=operator.attrgetter('esame') )
 
 class Voto:
     def __init__(self, esame, cfu, punteggio, lode, data):
