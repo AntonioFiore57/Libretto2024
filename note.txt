@@ -1,3 +1,51 @@
+Punto 8
+Stampare il libretto in ordine alfabetico di esame, e in ordine numerico decrescente di voto
+
+
+Opzione 1
+---------
+creiamo due metodi stampa_per_nome e stampa_per_punteggio.
+I due metodi non cambiano la lista voti degli oggetti Libretto
+
+Opzione 2
+---------
+creiamo due copie separate del libretto mediante due metodi: crea_libretto_ordinato_per_nome,
+crea_libretto_ordinato_per_punteggio dopo di che le due copie vengono stampate con il metodo stampa()
+-- copia shallow della lista dei voti --
+
+
+Opzione 3
+---------
+Come l'opzione 2 ma non si creano cpie del libretto; si agisce direttamente sulla lista
+dei voti.
++ metodo copy()
+
+
+
+Sviluppo opzione 3
+
+>>> Nella classe Libretto <<<
+def copy(self):
+    nuovo = Libretto()
+    for v in self.voti:
+        nuovo.voti.append( v.copy() )
+    return nuovo
+
+def crea_libretto_ordinato_per_nome(self):
+    nuovo = self.copy()
+
+    # ordina i voti per nome
+    nuovo.ordina_per_nome()
+
+    return nuovo
+
+
+
+def ordina_per_nome(self):
+    # ordina self.voti per nome esame
+
+
+
 class Voto:
     def __init__(self, esame, cfu, punteggio, lode, data):
         self.esame = esame
