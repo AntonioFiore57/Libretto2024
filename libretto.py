@@ -1,6 +1,7 @@
 """
 
 """
+import operator
 from random import randint
 import  copy
 
@@ -30,8 +31,23 @@ class Voto:
         else:
             raise ValueError("Punteggio esame errato (punteggio compreso tra 18 e 30 )")
 
+    def __lt__(self, other):
+        """
+        per considerare un voto minore di un altro valutiamo il punteggio, lode inclusa, e i cfu.
+        Il metodo presuppone la consistenza di punteggio e lode.
+
+        :param other: voto da valutare con self
+        :return: True se self < other
+        """
+        punteggioSelf = 31 if self.lode else self.punteggio
+        punteggioOther = 31 if other.lode else other.punteggio
+        punteggioSelf *= self.cfu
+        punteggioOther *= other.cfu
+
+        return punteggioSelf < punteggioOther
+
     def __str__(self):
-        return f"Esame {self.esame} superato con {self.str_punteggio()}"
+        return f"{self.esame} ({self.cfu}): voto = {self.str_punteggio()}"
 
     def __repr__(self):
         return f"Voto('{self.esame}', {self.cfu}, {self.punteggio}, {self.lode}, '{self.data}')"
@@ -49,6 +65,7 @@ class Voto:
 class Libretto:
     def __init__(self):
         self.voti = []
+
     def clona(self):
         nuovo = Libretto()
         # nuovo.voti = copy.deepcopy(self.voti)
@@ -179,6 +196,27 @@ class Libretto:
         punteggi = [v.punteggio for v in self.voti]
         return sum(punteggi)/len(punteggi)
 
+    def crea_libretto_ordinato_per_nome(self):
+        nuovo = self.clona()
+        # ordina i voti per nome
+        nuovo.ordina_per_nome()
+
+        return nuovo
+
+    def crea_libretto_ordinato_per_voto_desc(self):
+        nuovo = self.clona()
+        # ordina i voti per nome
+        nuovo.ordina_per_voto_desc()
+
+        return nuovo
+
+    def ordina_per_nome(self):
+        self.voti.sort(key=operator.attrgetter('esame'))
+
+    def ordina_per_voto_desc(self):
+        self.voti.sort(reverse=True)
+
+
 lib = Libretto()
 
 def domanda_1():
@@ -271,10 +309,23 @@ def domanda_7():
     print("\nLibretto migliorato: ")
     nuovo_migliorato.stampa()
 
+def domanda_7():
+    # stampare il libretto in ordine alfabetico di esame, e in ordine numerico decrescente di voto
+    nuovo_ordinato_per_nome = lib.crea_libretto_ordinato_per_nome()
+    nuovo_ordinato_per_voto = lib.crea_libretto_ordinato_per_voto_desc()
+    nuovo_ordinato_per_nome.stampa()
+    nuovo_ordinato_per_voto.stampa()
 
 
 if __name__ == '__main__':
     domanda_1()
+
+    lib.stampa()
+
     domanda_7()
+
+
+
+
 
     print("\n*** Fatto ***")
