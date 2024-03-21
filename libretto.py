@@ -193,8 +193,15 @@ class Libretto:
     def media(self):
         if len(self.voti)==0:
             raise ValueError("Elenco voti vuoto")
-        punteggi = [v.punteggio for v in self.voti]
-        return sum(punteggi)/len(punteggi)
+        somma_cfu=0
+        somma_punteggi = 0
+        for v in self.voti:
+            punto = 31 if v.lode else v.punteggio
+            punto *= v.cfu
+            somma_punteggi += punto
+            somma_cfu += v.cfu
+
+        return somma_punteggi/somma_cfu
 
     def crea_libretto_ordinato_per_nome(self):
         nuovo = self.clona()
