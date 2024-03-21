@@ -55,13 +55,28 @@ class Libretto:
         for v in self.voti:
             nuovo.append( v.copy() )
 
+        return nuovo
+    def stampa(self):
+        print("\n------------------------------------")
+        for v in self.voti:
+            print(v)
+        print(f"\nMedia dei voti: {self.media()}") # considerare la media ponderata dei voti
+        print("\n------------------------------------")
+    def libretto_miglioratao(self):
+        """
+        produce un libretto 'migliorato' secondo le specifiche
+        della domanda n.7.
+        Si utilizza il metodo clona per avere una deepcopy dellibretto
+        :return: deepcopy del libretto con i voti migliorati
+        """
+        nuovo = self.clona()
         for v in nuovo.voti:
             if (18 <=v.punteggio<= 23) or v.punteggio == 29:
                 v.punteggio += 1
             elif 24<=v.punteggio <=28:
                 v.punteggio += 2
-
         return nuovo
+
     def append(self, voto):
         """
         La funzione controlla:
@@ -179,10 +194,10 @@ def domanda_1():
         voto = Voto(nomeEsame, crediti, punteggio, lode, data)
 
         lib.append(voto)
-
+"""
     for vv in lib.voti:
         print(vv)
-
+"""
 
 
 def domanda_2():
@@ -245,14 +260,21 @@ def domanda_6():
     except ValueError as e:
         print(e)
 
+def domanda_7():
+    # creare un libretto "migliorato" in cui ciascun voto maggiore o uguale di 18 viene incrementato di 1 punto,
+    # e ciascun voto maggiore o uguale di 24 viene incrementato di 2 punti (senza superare il 30).
+    # Tenere separati due libretti, e stamparli entrambi.
+
+    nuovo_migliorato = lib.libretto_miglioratao()
+    print("\nLibretto: ")
+    lib.stampa()
+    print("\nLibretto migliorato: ")
+    nuovo_migliorato.stampa()
+
+
 
 if __name__ == '__main__':
     domanda_1()
-    print('\n-----------------------\n')
-
-    lib2 = lib.clona()
-
-    for v in lib2.voti:
-        print(v)
+    domanda_7()
 
     print("\n*** Fatto ***")
