@@ -216,6 +216,13 @@ class Libretto:
     def ordina_per_voto_desc(self):
         self.voti.sort(reverse=True)
 
+    def cancella_inferioriA(self, punteggio):
+        nuovi = []
+        for v in self.voti:
+            if v.punteggio>=punteggio:
+                nuovi.append(v)
+        self.voti = nuovi
+
 
 lib = Libretto()
 
@@ -316,13 +323,17 @@ def domanda_7():
     nuovo_ordinato_per_nome.stampa()
     nuovo_ordinato_per_voto.stampa()
 
+def domanda_8():
+    # cancellare dal libretto tutti i voti inferiori a 24
+    lib.cancella_inferioriA(24)
 
 if __name__ == '__main__':
     domanda_1()
 
     lib.stampa()
 
-    domanda_7()
+    domanda_8()
+    lib.stampa()
 
 
 
